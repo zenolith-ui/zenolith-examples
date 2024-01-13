@@ -1,0 +1,19 @@
+.{
+    .name = "zenolith-exmaples",
+    .version = "0.0.0",
+
+    .dependencies = .{
+        // Make sure this is the same version as the one used by zenolith-sdl2.
+        // See: https://git.mzte.de/zenolith/zenolith-sdl2
+        .zenolith = .{
+            .url = "git+https://git.mzte.de/zenolith/zenolith.git#6292688915f91da3ace4f38caa1dc33c718c8fc0",
+            .hash = "1220b709a856fe648fd5be6351b319d3626b3e368062d301e666a969032121b5ecde",
+        },
+        .zenolith_sdl2 = .{
+            .url = "git+https://git.mzte.de/zenolith/zenolith-sdl2.git#46431dbe65d50c899c3b701e2a3218dbaf1b4c8d",
+            .hash = "1220e3161064d9eae555ae33e74e0d0bcd07daa9a70b9052dd4094451f4b27ac2e2a",
+        },
+    },
+
+    .paths = .{""},
+}
