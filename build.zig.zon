@@ -10,8 +10,8 @@
             .hash = "12201677a81b6f8133bbe9c7d3b2afc07b61bf632a070d13d57f995827022f6a1f54",
         },
         .zenolith_sdl2 = .{
-            .url = "git+https://git.mzte.de/zenolith/zenolith-sdl2.git#7da2841ec78918c613f7f21684881cb10f11749e",
-            .hash = "1220279b9f7b98c04566f23b436aa7a8c9000cc2f0b70301b0c10c11e7116bd5d0fc",
+            .url = "git+https://git.mzte.de/zenolith/zenolith-sdl2.git#d8f44c96a9f5890296c00cd346dd6e661597a528",
+            .hash = "1220066e28c172156aa816790a3fe0d732576daa94218e3c15a1a4b30459d5d47aca",
         },
     },
 

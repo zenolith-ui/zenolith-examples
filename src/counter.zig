@@ -162,7 +162,7 @@ pub fn main() !void {
 
     // Use the platform to create a font. Font discovery will be supported in a future version.
     var font = zl.text.Font.create(try platform.createFont(.{
-        .source = .{ .path = "/usr/share/fonts/liberation/LiberationSans-Regular.ttf" },
+        .source = .{ .data = @import("assets").liberation_sans_regular },
     }), {});
     defer font.deinit();
 
