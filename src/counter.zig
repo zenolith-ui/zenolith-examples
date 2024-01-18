@@ -56,7 +56,7 @@ const Root = struct {
 
         try vbox.addChild(null, hbox);
         try vbox.addChild(null, try zl.widget.Spacer.init(alloc, .{ .flex = 1 }));
-        try vbox.addChild(null, try zl.widget.Label.init(alloc, "Hint: also try the plus and minus keys or tab + space!"));
+        try vbox.addChild(null, try zl.widget.Label.init(alloc, "Hint: also try the plus and minus keys or tab + space and Q!"));
 
         const self = Root{
             .box = vbox,
@@ -87,21 +87,31 @@ const Root = struct {
             },
 
             // This event is fired when a letter is typed.
-            *zl.treevent.CharType => {
+            *zl.treevent.KeyInput => {
                 // Dispatch the key event to children first...
                 try tv.dispatch(selfw);
 
                 // If no child handled it, and it's a press event..
-                if (!tv.handled) {
+                if (!tv.handled and tv.action == .press and tv.key != null) {
                     // ... update the counter accordingly
-                    switch (tv.codepoint) {
-                        '+' => {
+                    switch (tv.key.?) {
+                        .plus => {
+                            // Don't forget to mark the key input as handled!
+                            tv.handled = true;
                             self.counter +%= 1;
                             try self.updateLabel();
                         },
-                        '-' => {
+                        .minus => {
+                            tv.handled = true;
                             self.counter -%= 1;
                             try self.updateLabel();
+                        },
+                        .q => {
+                            tv.handled = true;
+
+                            // Example of downcasting a statspatch type to a certain implementation.
+                            // The quit function is not defined by Zenolith, but by Zenolith-SDL2 only!
+                            try selfw.data.platform.?.downcast(zsdl2.Sdl2Platform).?.quit();
                         },
                         else => {},
                     }
