@@ -18,12 +18,13 @@ pub const zenolith_options = struct {
 
 /// Our root widget type. Most functions in here will be invoked by Zenolith.
 const Root = struct {
-    // We use this box as our only child widget. It will contain our buttons and a label.
+    // We use this box as our only direct child. It will contain our buttons and a label.
     box: *zl.widget.Widget,
 
     // These aren't immediate children, we just save them have to be able to easily reference them.
     // Zenolith will take care of freeing these.
     label: *zl.widget.Widget,
+    btn_box: *zl.widget.Widget,
     latte_btn: *zl.widget.Widget,
     frappe_btn: *zl.widget.Widget,
     macchiato_btn: *zl.widget.Widget,
@@ -48,12 +49,8 @@ const Root = struct {
         const mocha_btn = try zl.widget.Button.init(alloc, "Mocha");
 
         try hbox.addChild(null, latte_btn);
-        try hbox.addChild(null, try zl.widget.Spacer.init(alloc, .{ .flex = 1 }));
         try hbox.addChild(null, frappe_btn);
-        try hbox.addChild(null, try zl.widget.Spacer.init(alloc, .{ .flex = 1 }));
         try hbox.addChild(null, macchiato_btn);
-        try hbox.addChild(null, try zl.widget.Spacer.init(alloc, .{ .flex = 1 }));
-        try hbox.addChild(null, mocha_btn);
 
         try vbox.addChild(null, hbox);
 
@@ -61,6 +58,7 @@ const Root = struct {
             .box = vbox,
 
             .label = label,
+            .btn_box = hbox,
             .latte_btn = latte_btn,
             .frappe_btn = frappe_btn,
             .macchiato_btn = macchiato_btn,
@@ -103,6 +101,34 @@ const Root = struct {
                 zl.Theme.catppuccin_mocha
             else
                 return;
+
+            // only show buttons that correspond to inactive themes
+            {
+                for (self.btn_box.children()) |_| {
+                    _ = try self.btn_box.removeChild(null);
+                }
+                for ([_]*zl.widget.Widget{
+                    self.latte_btn,
+                    self.frappe_btn,
+                    self.macchiato_btn,
+                    self.mocha_btn,
+                }) |w| {
+                    if (w != ba.btn_widget)
+                        try self.btn_box.addChild(null, w);
+                }
+
+                // After we've made changes to the widget tree, we have to make sure to re-link
+                // the updated subtree as well as fire a Relayout backevent on the updated widget
+                // to cause another layout pass on it. This assures that all buttens are positioned
+                // and sized correctly.
+                try self.btn_box.link(selfw, selfw.data.platform);
+                try zl.backevent.Backevent.create(
+                    // Child is safe to set to undefined here, as the Relayout backevent will set it
+                    // before being propagated.
+                    zl.backevent.Relayout{ .child = undefined },
+                    {},
+                ).dispatch(self.btn_box);
+            }
 
             try theme.apply(selfw.data.allocator, &selfw.data.attreebutes.?);
 
