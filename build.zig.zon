@@ -1,5 +1,5 @@
 .{
-    .name = "zenolith-exmaples",
+    .name = "zenolith-examples",
     .version = "0.0.0",
 
     .dependencies = .{
