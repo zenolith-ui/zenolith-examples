@@ -6,12 +6,12 @@
         // Make sure this is the same version as the one used by zenolith-sdl2.
         // See: https://git.mzte.de/zenolith/zenolith-sdl2
         .zenolith = .{
-            .url = "git+https://git.mzte.de/zenolith/zenolith.git#6f318242d7bb5dad079e5ad6421900744e5d03b4",
-            .hash = "122034a7efb688149b6251c939407e31b1574de418c947a9b25478957d91aad69f5f",
+            .url = "git+https://git.mzte.de/zenolith/zenolith.git#4e67de14b301048e73499f2ff46800b87b923609",
+            .hash = "1220236794547a0f13870e5c2d2b00e02571f3beee219303d2843e9aedc1b0eaf015",
         },
         .zenolith_sdl2 = .{
-            .url = "git+https://git.mzte.de/zenolith/zenolith-sdl2.git#ece4902a79c205e9ce597119331c20c7471afe03",
-            .hash = "1220f8865013e24f098acedca3900b8d7db6d69bc61f7d5be3878751c83342f3121f",
+            .url = "git+https://git.mzte.de/zenolith/zenolith-sdl2.git#179bd7429d475e78efa074c2b975fd940238d2d5",
+            .hash = "1220d4bbd097edd0b6e36a2d9450e0d3eaedc55ebd8610e79e8ea1de16d1124270c0",
         },
     },
 
